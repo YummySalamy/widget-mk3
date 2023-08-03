@@ -65,7 +65,7 @@ class MessageWidget {
 
     try {
       const chatbotResponse = await this.sendChatbotRequest(userMessage);
-      this.displayMessage(chatbotResponse.data.response, 'bot');
+      this.displayMessage(chatbotResponse.answer, 'bot');
     } catch (error) {
       console.error('Error fetching chatbot response:', error);
     }
@@ -76,33 +76,35 @@ class MessageWidget {
 }
 
 async sendChatbotRequest(query) {
-  const url = 'https://dev-aichain-chatbot-upload-dw2j52225q-uc.a.run.app/chatbot/query';
-  const headers = {
-    "Authorization": `Bearer ${token}`,
-    "token": 123456,
-  };
+  const chatbot_url = 'https://aichain-chat-api-dw2j52225q-uc.a.run.app';
+  const endpoint = `${chatbot_url}/conversation`;
+  const secret_token = 'chatpgt-token-xkaos2z';
+  const headers = {'token': secret_token};
+  const user_id = 'paRhdf57TlSWwNDdw3alLrgtNp83';
 
-  const params = {
-    'chatbot_id': chatbot_id,
-    'query': query,
+  const data = {
+    "chatbotId": '5dUrCBBKcE2UeJGbpb7i',
+    "userId": user_id,
+    'messages': [  
+      {'role':'user', 'content': query},
+    ]
   };
-
-  const queryString = Object.keys(params)
-    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key]))
-    .join('&');
 
   try {
-    const response = await fetch(url + '?' + queryString, {
-      method: 'GET',
-      headers: headers,
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
     });
 
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
 
-    const data = await response.json();
-    return data;
+    const responseData = await response.json();
+    return responseData;
   } catch (error) {
     throw error;
   }

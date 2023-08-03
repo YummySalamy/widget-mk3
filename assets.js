@@ -26,6 +26,7 @@ export const styles = `
     padding: 10px;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
+    left-border: 8px;
     border-radius: 8px;
   }
 
