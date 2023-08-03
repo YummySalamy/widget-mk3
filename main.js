@@ -88,9 +88,22 @@ async sendChatbotRequest(query) {
     'query': query,
   };
 
+  const queryString = Object.keys(params)
+    .map(key => encodeURIComponent(key) + '=' + encodeURIComponent(params[key]))
+    .join('&');
+
   try {
-    const response = await axios.get(url, { headers, params });
-    return response;
+    const response = await fetch(url + '?' + queryString, {
+      method: 'GET',
+      headers: headers,
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    return data;
   } catch (error) {
     throw error;
   }
@@ -130,6 +143,7 @@ displayMessage(text, sender) {
     </form>
     `;
   }
+
 
   injectStyles() {
     const styleTag = document.createElement("style");
