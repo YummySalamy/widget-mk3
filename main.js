@@ -95,6 +95,7 @@ async sendChatbotRequest(query) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        ...headers,
       },
       body: JSON.stringify(data),
     });
