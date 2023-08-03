@@ -1,5 +1,4 @@
 import { CLOSE_ICON, MESSAGE_ICON, styles } from "./assets.js";
-import axios from 'axios';
 
 class MessageWidget {
   constructor(position = "bottom-right") {
