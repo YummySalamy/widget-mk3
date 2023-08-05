@@ -6,6 +6,10 @@ function unescapeStr(str) {
   });
 }
 
+const scriptTag = document.currentScript;
+const chatbotId = scriptTag.getAttribute('chatbotId');
+const userId = scriptTag.getAttribute('userId');
+
 class MessageWidget {
   constructor(position = "bottom-right") {
     this.position = this.getPosition(position);
@@ -70,7 +74,7 @@ class MessageWidget {
     this.displayMessage(userMessage, 'user');
 
     try {
-      const chatbotResponse = await this.sendChatbotRequest(userMessage);
+      const chatbotResponse = await this.sendChatbotRequest(userMessage, chatbotId, userId);
       this.displayMessage(chatbotResponse, 'bot');
     } catch (error) {
       console.error('Error fetching chatbot response:', error);
@@ -81,7 +85,7 @@ class MessageWidget {
 
 }
 
-async sendChatbotRequest(query) {
+async sendChatbotRequest(query, chatbotId, userId) {
   const chatbot_url = 'https://aichain-chat-api-dw2j52225q-uc.a.run.app';
   const endpoint = `https://aichain-chat-api-dw2j52225q-uc.a.run.app/conversation_stream`;
   const secret_token = 'chatpgt-token-xkaos2z';
@@ -89,8 +93,8 @@ async sendChatbotRequest(query) {
   const user_id = 'paRhdf57TlSWwNDdw3alLrgtNp83'; // modificar el user_id, extraerlo de localStorage en la App
 
   const data = {
-    "chatbotId": '5dUrCBBKcE2UeJGbpb7i',
-    "userId": user_id,
+    "chatbotId": chatbotId,
+    "userId": userId,
     'messages': [  
       {'role':'user', 'content': query},
     ],
