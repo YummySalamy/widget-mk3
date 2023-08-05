@@ -86,10 +86,10 @@ async sendChatbotRequest(query) {
   const endpoint = `https://aichain-chat-api-dw2j52225q-uc.a.run.app/conversation_stream`;
   const secret_token = 'chatpgt-token-xkaos2z';
   const headers = {'token': secret_token};
-  const user_id = 'paRhdf57TlSWwNDdw3alLrgtNp83';
+  const user_id = 'paRhdf57TlSWwNDdw3alLrgtNp83'; // modificar el user_id, extraerlo de localStorage en la App
 
   const data = {
-    "chatbotId": 'EtHMe8Z4APPMoObxvleV',
+    "chatbotId": '5dUrCBBKcE2UeJGbpb7i',
     "userId": user_id,
     'messages': [  
       {'role':'user', 'content': query},
@@ -103,7 +103,7 @@ async sendChatbotRequest(query) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        ...headers,
+        ...headers, 
       },
       body: JSON.stringify(data),
     });
