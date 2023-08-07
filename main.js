@@ -58,7 +58,7 @@ class MessageWidget {
 
     container.appendChild(this.widgetContainer);
     container.appendChild(buttonContainer);
-    const sendButton = container.querySelector('button[type="submit"]');
+    const sendButton = container.querySelector('.button-45');
 
     sendButton.addEventListener('click', async (event) => {
     event.preventDefault();
@@ -158,6 +158,7 @@ async sendChatbotRequest(query) {
 
 displayMessage(text, sender) {
   const chatBox = document.querySelector('.chat-box');
+  const chatContainer = document.querySelector('.chat-container');
   
   // Buscar el último mensaje en el chat
   const lastMessage = chatBox.querySelector('.chat-message:last-child');
@@ -170,15 +171,12 @@ displayMessage(text, sender) {
     // Si es un nuevo remitente o el primer mensaje, crear un nuevo elemento de mensaje
     const chatMessage = document.createElement('div');
     chatMessage.classList.add('chat-message', `message-${sender}`);
+    chatMessage.innerHTML = `<div class="message-content">${unescapeStr(text)}</div>`;
     
-    const messageContent = document.createElement('p');
-    messageContent.classList.add('message-content');
-    messageContent.textContent = unescapeStr(text);
-    
-    chatMessage.appendChild(messageContent);
     chatBox.appendChild(chatMessage);
+    chatBox.scrollTop = chatBox.scrollHeight
   }
-  
+  chatContainer.scrollTop = chatContainer.scrollHeight;
   chatBox.scrollTop = chatBox.scrollHeight;
 }
 
@@ -187,26 +185,24 @@ displayMessage(text, sender) {
   createWidgetContent() {
     this.widgetContainer.innerHTML = `
     <header class="widget__header">
-    <h3>AI CHAIN</h3>
-    <p>Tu chatbot: ######</p>
-  </header>
+      <h2>AI CHAIN</h2>
+      <p>Asistente virtual inteligente</p>
+    </header>
 
   <div class="chat-container">
     <div class="chat-box">
-      <div class="chat-message">
-        <p>Hola, ¿en qué puedo ayudarte?</p>
+      <div class="chat-message message-bot">
+        ¿Hola, en qué puedo ayudarte? 😊
       </div>
     </div>
   </div>
 
     <form class="input-container">
-      <input
-        id="messageInput"
-        name="message"
-        placeholder="Envia un mensaje..."
-        rows="1"
-      ></input>
-      <button class="form_filed_button" type="submit">Enviar</button>
+    <div class="inputGroup">
+      <input type="text" required="" autocomplete="off" id="messageInput">
+      <label for="name">Tu mensaje</label>
+    </div>
+      <button class="button-45" role="button" type="submit">Enviar</button>
     </form>
     `;
   }
